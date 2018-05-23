@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- https://hellokoding.com/spring-mvc-4-hello-world-example-with-xml-configuration-maven-and-jsp/ -->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd 
+	http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<mvc:annotation-driven />
+	
+
+
+	<context:annotation-config />
+	<!-- quét toàn bộ các lớp trong package -->
+	<context:component-scan base-package="com.zent.entities" />
+	<context:component-scan base-package="com.zent.dao" />
+	<context:component-scan base-package="com.zent.service" />
+	<context:component-scan base-package="com.zent.controller" />
+	
+	
+	<mvc:resources mapping="/images/**" location="/images/" />
+	<mvc:resources location="/css/" mapping="/css/**"></mvc:resources>
+	<mvc:resources location="/js/" mapping="/js/**"></mvc:resources>
+	<mvc:resources location="/ckeditor/" mapping="/ckeditor/**"></mvc:resources>
+	<mvc:resources location="/vendors/" mapping="/vendors/**"></mvc:resources>
+	<mvc:resources location="/build/" mapping="/build/**"></mvc:resources>
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/pages/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+
+	<!-- <bean id="userValidator" class="com.zent.validator.UserValidator"></bean> -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/i18n/language" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+	<!-- <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"> -->
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="en" />
+		<property name="cookieName" value="myAppLocaleCookie"></property>
+		<property name="cookieMaxAge" value="3600"></property>
+	</bean>
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="language" />
+		</bean>
+	</mvc:interceptors>
+	<!-- upload file -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- max upload size in bytes -->
+		<property name="maxUploadSize" value="20971520" /> <!-- 20MB -->
+
+		<!-- max size of file in memory (in bytes) -->
+		<property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
+
+	</bean>
+	<import resource="classpath:hibernate-config.xml" />
+</beans>

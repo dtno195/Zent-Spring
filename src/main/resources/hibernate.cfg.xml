@@ -11,7 +11,7 @@
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.format_sql">true</property>
 		<mapping class="com.zent.model.User" />
-	 	<mapping class="com.zent.model.Role" />
-		<mapping class="com.zent.model.UserRole" />
+	 	<!-- <mapping class="com.zent.model.Role" />
+		<mapping class="com.zent.model.UserRole" /> -->
 	</session-factory>
 </hibernate-configuration>
